@@ -37,8 +37,8 @@ public class AudioTaskUtil {
         return when;
     }
 
-    public static void updateProgressBar (ProgressBar progressBar, double value){
-        progressBar.setProgress((int)value);
+    public static void updateProgressBar(ProgressBar progressBar, double value) {
+        progressBar.setProgress((int) value);
     }
 
     public static void appendToStartOfLog(TextView log, String appendThis) {

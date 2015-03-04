@@ -17,6 +17,7 @@ public class MyCardScrollAdapter extends CardScrollAdapter {
     public MyCardScrollAdapter() {
         this.viewArrayList = new ArrayList<View>();
     }
+
     public MyCardScrollAdapter(ArrayList<View> views) {
         this.viewArrayList = views;
     }
@@ -39,13 +40,13 @@ public class MyCardScrollAdapter extends CardScrollAdapter {
     @Override
     public int getPosition(Object item) {
 
-        if (viewArrayList.indexOf(item)>=0)
+        if (viewArrayList.indexOf(item) >= 0)
             return viewArrayList.indexOf(item);
         else
             return AdapterView.INVALID_POSITION;
     }
 
-    public boolean addView (View view){
+    public boolean addView(View view) {
         return viewArrayList.add(view);
     }
 

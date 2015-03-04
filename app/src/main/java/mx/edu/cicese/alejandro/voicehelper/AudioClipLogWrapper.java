@@ -17,7 +17,6 @@ package mx.edu.cicese.alejandro.voicehelper;
 
 import android.content.Context;
 import android.os.PowerManager;
-import android.util.Log;
 
 import de.greenrobot.event.EventBus;
 import mx.edu.cicese.alejandro.audio.record.AudioClipListener;
@@ -25,11 +24,10 @@ import mx.edu.cicese.alejandro.audio.util.AudioUtil;
 
 
 public class AudioClipLogWrapper implements AudioClipListener {
-    private static final String TAG = "Voice Tracker";
-    public boolean photo;
     private Context context;
     private double averageVolume;
     private double currentVolume;
+    private double volumeThreshold;
     private double lowPassAlpha = 0.5;
     private double STARTING_AVERAGE = 200.0;
     private double INCREASE_FACTOR = 3.0;
@@ -43,20 +41,18 @@ public class AudioClipLogWrapper implements AudioClipListener {
     @Override
     public boolean heard(short[] audioData, int sampleRate) {
 
+
         currentVolume = AudioUtil.rootMeanSquared(audioData);
 
-        double volumeThreshold = averageVolume * INCREASE_FACTOR;
-
+        volumeThreshold = averageVolume * INCREASE_FACTOR;
+/*
         Log.d(TAG, "actual: " + currentVolume + " promedio: " + averageVolume
                 + " threshold: " + volumeThreshold);
+                */
 
-        if (currentVolume > volumeThreshold) {
-            photo = true;
-            turnOnScreen();
-
-        } else {
+        if (currentVolume < volumeThreshold)
             averageVolume = lowPass(currentVolume, averageVolume);
-        }
+
         EventBus.getDefault().post(this);
         return false;
     }
@@ -72,6 +68,14 @@ public class AudioClipLogWrapper implements AudioClipListener {
 
     private double lowPass(double current, double last) {
         return last * (1.0 - lowPassAlpha) + current * lowPassAlpha;
+    }
+
+    public boolean isTooLoud() {
+        boolean returnValue = false;
+        if (currentVolume > volumeThreshold)
+            returnValue = true;
+
+        return returnValue;
     }
 
     public void turnOnScreen() {

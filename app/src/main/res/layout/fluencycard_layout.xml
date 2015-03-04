@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/body_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/glass_card_body_height"
+        android:layout_marginLeft="@dimen/glass_card_margin"
+        android:layout_marginRight="@dimen/glass_card_margin"
+        android:layout_marginTop="@dimen/glass_card_margin"
+        tools:ignore="UselessLeaf">
+
+        <ImageView
+            android:id="@+id/speaker_imageview"
+            android:layout_width="75dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0"
+            android:src="@drawable/speaker" />
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/glass_card_body_height"
+            android:layout_alignParentBottom="false"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/speaker_imageview"
+            android:layout_alignParentEnd="false">
+
+
+            <ProgressBar
+                android:id="@+id/progressbar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:max="1400"
+                android:progressDrawable="@drawable/progressbar" />
+
+            <ImageView
+                android:id="@+id/scale_imageview"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0"
+                android:scaleType="fitXY"
+                android:src="@drawable/vol" />
+
+            <TextView
+                android:id="@+id/incident_textview"
+                android:layout_width="31dp"
+                android:layout_height="31dp"
+                android:layout_gravity="right"
+                android:background="@drawable/circle_white"
+                android:gravity="center"
+                android:text="1"
+                android:textAlignment="center" />
+        </FrameLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/footer_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:layout_marginBottom="@dimen/glass_card_footer_margin"
+        android:layout_marginLeft="@dimen/glass_card_margin"
+        android:layout_marginRight="@dimen/glass_card_margin"
+        android:orientation="horizontal">
+
+        <!-- The footer view will grow to fit as much content as possible while the
+             timestamp view keeps a fixed width. If the footer text is too long, it
+             will be ellipsized with a 40px margin between it and the timestamp. -->
+
+        <TextSwitcher
+            android:id="@+id/footer_textswitcher"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inAnimation="@android:anim/fade_in"
+            android:outAnimation="@android:anim/fade_out">
+        </TextSwitcher>
+
+        <TextView
+            android:id="@+id/timestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/glass_card_margin"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </LinearLayout>
+</FrameLayout>

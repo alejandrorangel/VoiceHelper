@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Voice Rules Messages -->
+    <string-array name="voice_rules_first">
+        <item>string 1</item>
+        <item>string 2</item>
+        <item>string 3</item>
+        <item>string 4</item>
+        <item>string 5</item>
+    </string-array>
+    <string-array name="voice_rules_second">
+        <item>string 6</item>
+        <item>string 7</item>
+        <item>string 8</item>
+        <item>string 9</item>
+        <item>string 10</item>
+    </string-array>
+    <string-array name="voice_rules_third">
+        <item>string 11</item>
+        <item>string 12</item>
+        <item>string 13</item>
+        <item>string 14</item>
+        <item>string 15</item>
+    </string-array>
+    <!-- Fluency Rules Messages -->
+    <string-array name="fluency_rules_first">
+        <item>string 1</item>
+        <item>string 2</item>
+        <item>string 3</item>
+        <item>string 4</item>
+        <item>string 5</item>
+    </string-array>
+    <string-array name="fluency_rules_second">
+        <item>string 1</item>
+        <item>string 2</item>
+        <item>string 3</item>
+        <item>string 4</item>
+        <item>string 5</item>
+    </string-array>
+    <string-array name="fluency_rules_third">
+        <item>string 1</item>
+        <item>string 2</item>
+        <item>string 3</item>
+        <item>string 4</item>
+        <item>string 5</item>
+    </string-array>
+    <!-- Emotion Rules Messages -->
+    <string-array name="emotion_rules_first">
+        <item>string 1</item>
+        <item>string 2</item>
+        <item>string 3</item>
+        <item>string 4</item>
+        <item>string 5</item>
+    </string-array>
+    <string-array name="emotion_rules_second">
+        <item>string 1</item>
+        <item>string 2</item>
+        <item>string 3</item>
+        <item>string 4</item>
+        <item>string 5</item>
+    </string-array>
+    <string-array name="emotion_rules_third">
+        <item>string 1</item>
+        <item>string 2</item>
+        <item>string 3</item>
+        <item>string 4</item>
+        <item>string 5</item>
+    </string-array>
+
+</resources>
