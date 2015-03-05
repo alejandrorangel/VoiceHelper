@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package mx.edu.cicese.alejandro.audio.interp;
+package mx.edu.cicese.alejandro.audio.Detector;
 
 import android.util.Log;
 
@@ -22,48 +22,39 @@ import mx.edu.cicese.alejandro.audio.record.AmplitudeClipListener;
 /**
  * @author Greg Milette &#60;<a
  *         href="mailto:gregorym@gmail.com">gregorym@gmail.com</a>&#62;
- * 
  */
-public class SingleClapDetector implements AmplitudeClipListener
-{
-    private static final String TAG = "SingleClapDetector";
-
-    /**
-     * required loudness to determine it is a clap
-     */
-    private int amplitudeThreshold;
-
+public class SingleClapDetector implements AmplitudeClipListener {
     /**
      * requires a little of noise by the user to trigger, background noise may
      * trigger it
      */
     public static final int AMPLITUDE_DIFF_LOW = 10000;
     public static final int AMPLITUDE_DIFF_MED = 18000;
+    private static final int DEFAULT_AMPLITUDE_DIFF = AMPLITUDE_DIFF_MED;
     /**
      * requires a lot of noise by the user to trigger. background noise isn't
      * likely to be this loud
      */
     public static final int AMPLITUDE_DIFF_HIGH = 25000;
+    private static final String TAG = "SingleClapDetector";
+    /**
+     * required loudness to determine it is a clap
+     */
+    private int amplitudeThreshold;
 
-    private static final int DEFAULT_AMPLITUDE_DIFF = AMPLITUDE_DIFF_MED;
-
-    public SingleClapDetector()
-    {
+    public SingleClapDetector() {
         this(DEFAULT_AMPLITUDE_DIFF);
     }
 
-    public SingleClapDetector(int amplitudeThreshold)
-    {
+    public SingleClapDetector(int amplitudeThreshold) {
         this.amplitudeThreshold = amplitudeThreshold;
     }
 
     @Override
-    public boolean heard(int maxAmplitude)
-    {
+    public boolean heard(int maxAmplitude) {
         boolean clapDetected = false;
 
-        if (maxAmplitude >= amplitudeThreshold)
-        {
+        if (maxAmplitude >= amplitudeThreshold) {
             Log.d(TAG, "heard a clap");
             clapDetected = true;
         }

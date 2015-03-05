@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package mx.edu.cicese.alejandro.voicehelper;
+package mx.edu.cicese.alejandro.audio.Detector;
 
 import android.content.Context;
 import android.os.PowerManager;
+import android.util.Log;
 
 import de.greenrobot.event.EventBus;
 import mx.edu.cicese.alejandro.audio.record.AudioClipListener;
@@ -30,7 +31,7 @@ public class AudioClipLogWrapper implements AudioClipListener {
     private double volumeThreshold;
     private double lowPassAlpha = 0.5;
     private double STARTING_AVERAGE = 200.0;
-    private double INCREASE_FACTOR = 3.0;
+    private double INCREASE_FACTOR = 2.0;
 
 
     public AudioClipLogWrapper(Context context) {
@@ -45,10 +46,10 @@ public class AudioClipLogWrapper implements AudioClipListener {
         currentVolume = AudioUtil.rootMeanSquared(audioData);
 
         volumeThreshold = averageVolume * INCREASE_FACTOR;
-/*
-        Log.d(TAG, "actual: " + currentVolume + " promedio: " + averageVolume
+
+        Log.d("VoiceHelper", "actual: " + currentVolume + " promedio: " + averageVolume
                 + " threshold: " + volumeThreshold);
-                */
+
 
         if (currentVolume < volumeThreshold)
             averageVolume = lowPass(currentVolume, averageVolume);

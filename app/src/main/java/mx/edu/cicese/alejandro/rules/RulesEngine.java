@@ -14,74 +14,78 @@ import mx.edu.cicese.alejandro.voicehelper.R;
  * TODO
  * This is a temporaly name, I have to find a better name for this class
  */
-public class Rules {
-    ArrayList<Incident> incidents;
+public class RulesEngine {
+    ArrayList<Mistep> mistepsArrayList;
     Context context;
 
-    public Rules(Context context){
+    public RulesEngine(Context context) {
         this.context = context;
-        this.incidents =  new ArrayList<Incident>();
+        this.mistepsArrayList = new ArrayList<Mistep>();
     }
 
-    public void addIncident(Incident.Kind kind){
-        Long current = System.currentTimeMillis()/1000;
+    public Mistep addMistep(Mistep.Kind kind) {
+        Long current = System.currentTimeMillis() / 1000;
 
-        Incident newIncident = new Incident(kind, current);
+        Mistep newMistep = new Mistep(kind, current);
 
-        newIncident.setTriggerMessege(selectTringgerString(kind));
+        newMistep.setTriggerMessege(selectTringgerString(kind));
 
-        Log.d("VoiceHelper", newIncident.getTriggerMessege());
+        newMistep.setNumberOfIncident(checkNumberOfMisteps(kind));
+
+        Log.d("VoiceHelper", newMistep.getTriggerMessege());
 
         /** parte para agregar**/
-        incidents.add(newIncident);
+        mistepsArrayList.add(newMistep);
+
+        return newMistep;
     }
 
-    public int checkNumberOfIncidents(Incident.Kind kind){
+    public int checkNumberOfMisteps(Mistep.Kind kind) {
         int count = 0;
-        for(Incident incident : incidents){
-            if(incident.kindOf == kind)
+        for (Mistep Mistep : mistepsArrayList) {
+            if (Mistep.kindOf == kind)
                 count++;
         }
         return count;
     }
 
 
-    /** Revisar... con quedo muy limpio que digamos**/
-    public String selectTringgerString(Incident.Kind kind){
-        int count  = checkNumberOfIncidents(kind);
+    /**
+     * Revisar... con quedo muy limpio que digamos
+     */
+    public String selectTringgerString(Mistep.Kind kind) {
+        int numberOfIncidents = checkNumberOfMisteps(kind);
         Resources res = context.getResources();
         String[] strings = null;
 
-        if (count <= 1) {
-            if(kind == Incident.Kind.VOICE){
+        if (numberOfIncidents <= 1) {
+            if (kind == Mistep.Kind.VOICE) {
                 strings = res.getStringArray(R.array.voice_trigger_first);
             }
-            if(kind == Incident.Kind.FLUENCY){
+            if (kind == Mistep.Kind.FLUENCY) {
                 strings = res.getStringArray(R.array.fluency_trigger_first);
             }
-            if(kind == Incident.Kind.EMOTION){
+            if (kind == Mistep.Kind.EMOTION) {
                 strings = res.getStringArray(R.array.emotion_trigger_first);
             }
-        }
-        else if (/* myInterval >= 0 && */ count <= 3){
-            if(kind == Incident.Kind.VOICE){
+        } else if (numberOfIncidents <= 3) {
+            if (kind == Mistep.Kind.VOICE) {
                 strings = res.getStringArray(R.array.voice_trigger_second);
             }
-            if(kind == Incident.Kind.FLUENCY){
+            if (kind == Mistep.Kind.FLUENCY) {
                 strings = res.getStringArray(R.array.fluency_trigger_second);
             }
-            if(kind == Incident.Kind.EMOTION){
+            if (kind == Mistep.Kind.EMOTION) {
                 strings = res.getStringArray(R.array.emotion_trigger_second);
             }
-        }
-        else {
-            if(kind == Incident.Kind.VOICE){
+        } else {
+            if (kind == Mistep.Kind.VOICE) {
                 strings = res.getStringArray(R.array.voice_trigger_third);
             }
-            if(kind == Incident.Kind.FLUENCY){
+            if (kind == Mistep.Kind.FLUENCY) {
                 strings = res.getStringArray(R.array.fluency_trigger_third);
             }
-            if(kind == Incident.Kind.EMOTION){
+            if (kind == Mistep.Kind.EMOTION) {
                 strings = res.getStringArray(R.array.emotion_trigger_third);
             }
         }

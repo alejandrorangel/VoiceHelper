@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package mx.edu.cicese.alejandro.audio.interp;
+package mx.edu.cicese.alejandro.audio.Detector;
 
 import android.util.Log;
 
@@ -26,13 +26,10 @@ import mx.edu.cicese.alejandro.audio.record.AudioClipListener;
  */
 public class LoudNoiseDetector implements AudioClipListener
 {
-    private static final String TAG = "LoudNoiseDetector";
-
-    private double volumeThreshold;
-
     public static final int DEFAULT_LOUDNESS_THRESHOLD = 2000;
-
+    private static final String TAG = "LoudNoiseDetector";
     private static final boolean DEBUG = true;
+    private double volumeThreshold;
 
     public LoudNoiseDetector()
     {

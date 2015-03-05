@@ -12,6 +12,7 @@ import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import mx.edu.cicese.alejandro.rules.Mistep;
 import mx.edu.cicese.alejandro.voicehelper.R;
 
 /**
@@ -22,8 +23,18 @@ import mx.edu.cicese.alejandro.voicehelper.R;
 public class AmplitudeCardView extends FrameLayout {
     private ProgressBar progressBar;
     private TextSwitcher textSwitcher;
-    private TextView incidentTextview;
+    private TextView mistepTextview;
     private ObjectAnimator animation;
+    private ViewSwitcher.ViewFactory mFactory = new ViewSwitcher.ViewFactory() {
+
+        @Override
+        public View makeView() {
+            TextView t = new TextView(getContext());
+            t.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
+            t.setTextAppearance(getContext(), android.R.style.TextAppearance_Large);
+            return t;
+        }
+    };
 
     public AmplitudeCardView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -42,36 +53,35 @@ public class AmplitudeCardView extends FrameLayout {
 
     private void initView() {
         View view = inflate(getContext(), R.layout.amplitudecard_layout, null);
+        this.mistepTextview = (TextView) view.findViewById(R.id.incident_textview);
         this.progressBar = (ProgressBar) view.findViewById(R.id.progressbar);
         this.textSwitcher = (TextSwitcher) view.findViewById(R.id.footer_textswitcher);
         this.textSwitcher.setFactory(mFactory);
-        this.incidentTextview = (TextView) view.findViewById(R.id.incident_textview);
         addView(view);
     }
 
-    public void setProgressBarValue(int value){
-            animation = ObjectAnimator.ofInt(progressBar, "progress", value);
-            animation.setDuration(200); // 0.5 second
-            animation.setInterpolator(new DecelerateInterpolator());
-            animation.start();
+    public void setProgressBarValue(int value) {
+        animation = ObjectAnimator.ofInt(progressBar, "progress", value);
+        animation.setDuration(200); // 0.5 second
+        animation.setInterpolator(new DecelerateInterpolator());
+        animation.start();
     }
 
     public void setCurrentText(String text){
         this.textSwitcher.setCurrentText(text);
     }
-    public void setText(String text){
+
+    public void setText(String text) {
         this.textSwitcher.setText(text);
     }
 
-    private ViewSwitcher.ViewFactory mFactory = new ViewSwitcher.ViewFactory() {
+    public void setIncidentText(int number) {
+        this.mistepTextview.setText(String.valueOf(number));
+    }
 
-        @Override
-        public View makeView() {
-            TextView t = new TextView(getContext());
-            t.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
-            t.setTextAppearance(getContext(), android.R.style.TextAppearance_Large);
-            return t;
-        }
-    };
+    public void incidentDetect(Mistep mistep) {
+        this.mistepTextview.setText(String.valueOf(mistep.getNumberOfIncident()));
+        this.setText(mistep.getTriggerMessege());
+    }
 }
 

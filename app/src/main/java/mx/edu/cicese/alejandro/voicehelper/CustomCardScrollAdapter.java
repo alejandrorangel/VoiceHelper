@@ -11,15 +11,11 @@ import java.util.ArrayList;
 /**
  * Created by Alejandro on 2/18/15.
  */
-public class MyCardScrollAdapter extends CardScrollAdapter {
+public class CustomCardScrollAdapter extends CardScrollAdapter {
     ArrayList<View> viewArrayList;
 
-    public MyCardScrollAdapter() {
+    public CustomCardScrollAdapter() {
         this.viewArrayList = new ArrayList<View>();
-    }
-
-    public MyCardScrollAdapter(ArrayList<View> views) {
-        this.viewArrayList = views;
     }
 
     @Override

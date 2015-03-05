@@ -1,9 +1,8 @@
-package mx.edu.cicese.alejandro.voicehelper;
+package mx.edu.cicese.alejandro.audio.Detector;
 
 import android.app.Activity;
 import android.util.Log;
 
-import mx.edu.cicese.alejandro.audio.interp.LoudNoiseDetector;
 import mx.edu.cicese.alejandro.audio.processing.ZeroCrossing;
 import mx.edu.cicese.alejandro.audio.record.AudioClipListener;
 import mx.edu.cicese.alejandro.audio.util.AudioUtil;

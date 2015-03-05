@@ -19,8 +19,6 @@ import android.content.Context;
 import android.media.AudioFormat;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import mx.edu.cicese.alejandro.audio.record.AudioClipListener;
 import mx.edu.cicese.alejandro.audio.record.AudioClipRecorder;
@@ -28,9 +26,6 @@ import mx.edu.cicese.alejandro.audio.record.AudioClipRecorder;
 
 public class RecordAudioTask extends AsyncTask<AudioClipListener, Void, Boolean> {
     private static final String TAG = "RecordAudioTask";
-
-    private TextView log;
-    private ProgressBar progressBar;
 
     private Context context;
     private String taskName;
@@ -42,7 +37,6 @@ public class RecordAudioTask extends AsyncTask<AudioClipListener, Void, Boolean>
 
     @Override
     protected void onPreExecute() {
-        //AudioTaskUtil.appendToStartOfLog(log, "started " + getTaskName());
         super.onPreExecute();
     }
 

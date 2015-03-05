@@ -25,9 +25,9 @@
             android:layout_width="fill_parent"
             android:layout_height="@dimen/glass_card_body_height"
             android:layout_alignParentBottom="false"
+            android:layout_alignParentEnd="false"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/speaker_imageview"
-            android:layout_alignParentEnd="false">
+            android:layout_toEndOf="@id/speaker_imageview">
 
 
             <ProgressBar
@@ -49,12 +49,14 @@
 
             <TextView
                 android:id="@+id/incident_textview"
-                android:layout_width="31dp"
-                android:layout_height="31dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_gravity="right"
+                android:autoText="false"
                 android:background="@drawable/circle_white"
                 android:gravity="center"
-                android:text="1"
+                android:numeric="integer"
+                android:text="0"
                 android:textAlignment="center" />
         </FrameLayout>
 
@@ -80,8 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:inAnimation="@android:anim/fade_in"
-            android:outAnimation="@android:anim/fade_out">
-        </TextSwitcher>
+            android:outAnimation="@android:anim/fade_out"></TextSwitcher>
 
         <TextView
             android:id="@+id/timestamp"
