@@ -21,10 +21,6 @@ import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
-import com.glass.cuxtomcam.CameraOverlay.Mode;
-import com.glass.cuxtomcam.constants.CuxtomIntent;
-import com.glass.cuxtomcam.constants.CuxtomIntent.CAMERA_MODE;
-import com.glass.cuxtomcam.constants.CuxtomIntent.FILE_TYPE;
 import com.google.android.glass.touchpad.Gesture;
 import com.google.android.glass.touchpad.GestureDetector;
 import com.google.android.glass.touchpad.GestureDetector.BaseListener;
@@ -38,6 +34,11 @@ import java.util.Date;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import mx.edu.cicese.alejandro.camera.CameraOverlay.Mode;
+import mx.edu.cicese.alejandro.camera.constants.CuxtomIntent;
+import mx.edu.cicese.alejandro.camera.constants.CuxtomIntent.CAMERA_MODE;
+import mx.edu.cicese.alejandro.camera.constants.CuxtomIntent.FILE_TYPE;
 
 public class CuxtomCamActivity extends Activity implements BaseListener, CameraListener,
         MediaScannerConnection.OnScanCompletedListener {
@@ -499,13 +500,13 @@ public class CuxtomCamActivity extends Activity implements BaseListener, CameraL
                         mOverlay.setMode(Mode.RECORDING);
 
                     } catch (Exception e) {
-                        Log.e("Error Starting CuXtom Camera for video recording", e.getMessage());
+                        Log.e("VoiceHelper", e.getMessage());
                     }
 
                 }
             });
         } catch (Exception e) {
-            Log.e("Error Starting CuXtom Camera for video recording", e.getMessage());
+            Log.e("VoiceHelper", e.getMessage());
         }
     }
 
