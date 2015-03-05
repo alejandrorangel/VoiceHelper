@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
-import android.widget.TextSwitcher;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 import android.widget.ViewSwitcher;
 
 import mx.edu.cicese.alejandro.rules.Mistep;
@@ -17,13 +17,16 @@ import mx.edu.cicese.alejandro.voicehelper.R;
 
 /**
  * Created by Alejandro on 2/28/15.
+ *
  */
 
 
 public class AmplitudeCardView extends FrameLayout {
     private ProgressBar progressBar;
-    private TextSwitcher textSwitcher;
+    private TextView textTrigger;
+    private TextView textRules;
     private TextView mistepTextview;
+    private ViewFlipper mViewFlipper;
     private ObjectAnimator animation;
     private ViewSwitcher.ViewFactory mFactory = new ViewSwitcher.ViewFactory() {
 
@@ -55,8 +58,10 @@ public class AmplitudeCardView extends FrameLayout {
         View view = inflate(getContext(), R.layout.amplitudecard_layout, null);
         this.mistepTextview = (TextView) view.findViewById(R.id.incident_textview);
         this.progressBar = (ProgressBar) view.findViewById(R.id.progressbar);
-        this.textSwitcher = (TextSwitcher) view.findViewById(R.id.footer_textswitcher);
-        this.textSwitcher.setFactory(mFactory);
+        this.textRules = (TextView) view.findViewById(R.id.footer_rules);
+        this.textTrigger = (TextView) view.findViewById(R.id.footer_trigger);
+        this.mViewFlipper = (ViewFlipper) view.findViewById(R.id.footer);
+        this.mViewFlipper.setFlipInterval(1500);
         addView(view);
     }
 
@@ -67,12 +72,12 @@ public class AmplitudeCardView extends FrameLayout {
         animation.start();
     }
 
-    public void setCurrentText(String text){
-        this.textSwitcher.setCurrentText(text);
+    public void setTriggerText(String text) {
+        this.textTrigger.setText(text);
     }
 
-    public void setText(String text) {
-        this.textSwitcher.setText(text);
+    public void setRulesText(String text) {
+        this.textRules.setText(text);
     }
 
     public void setIncidentText(int number) {
@@ -81,7 +86,9 @@ public class AmplitudeCardView extends FrameLayout {
 
     public void incidentDetect(Mistep mistep) {
         this.mistepTextview.setText(String.valueOf(mistep.getNumberOfIncident()));
-        this.setText(mistep.getTriggerMessege());
+        this.setTriggerText(mistep.getTriggerMessege());
+        this.setRulesText(mistep.getRulesMessege());
+        this.mViewFlipper.startFlipping();
     }
 }
 

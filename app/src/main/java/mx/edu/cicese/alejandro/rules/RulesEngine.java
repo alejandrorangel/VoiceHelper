@@ -29,6 +29,7 @@ public class RulesEngine {
         Mistep newMistep = new Mistep(kind, current);
 
         newMistep.setTriggerMessege(selectTringgerString(kind));
+        newMistep.setRulesMessege(selectRulesString(kind));
 
         newMistep.setNumberOfIncident(checkNumberOfMisteps(kind));
 
@@ -87,6 +88,50 @@ public class RulesEngine {
             }
             if (kind == Mistep.Kind.EMOTION) {
                 strings = res.getStringArray(R.array.emotion_trigger_third);
+            }
+        }
+
+
+        return strings[new Random().nextInt(strings.length)];
+    }
+
+    /**
+     * --Replicado de Trigger-- Revisar... con quedo muy limpio que digamos
+     */
+    public String selectRulesString(Mistep.Kind kind) {
+        int numberOfIncidents = checkNumberOfMisteps(kind);
+        Resources res = context.getResources();
+        String[] strings = null;
+
+        if (numberOfIncidents <= 1) {
+            if (kind == Mistep.Kind.VOICE) {
+                strings = res.getStringArray(R.array.voice_rules_first);
+            }
+            if (kind == Mistep.Kind.FLUENCY) {
+                strings = res.getStringArray(R.array.fluency_rules_first);
+            }
+            if (kind == Mistep.Kind.EMOTION) {
+                strings = res.getStringArray(R.array.emotion_rules_first);
+            }
+        } else if (numberOfIncidents <= 3) {
+            if (kind == Mistep.Kind.VOICE) {
+                strings = res.getStringArray(R.array.voice_rules_second);
+            }
+            if (kind == Mistep.Kind.FLUENCY) {
+                strings = res.getStringArray(R.array.fluency_rules_second);
+            }
+            if (kind == Mistep.Kind.EMOTION) {
+                strings = res.getStringArray(R.array.emotion_rules_second);
+            }
+        } else {
+            if (kind == Mistep.Kind.VOICE) {
+                strings = res.getStringArray(R.array.voice_rules_third);
+            }
+            if (kind == Mistep.Kind.FLUENCY) {
+                strings = res.getStringArray(R.array.fluency_rules_third);
+            }
+            if (kind == Mistep.Kind.EMOTION) {
+                strings = res.getStringArray(R.array.emotion_rules_third);
             }
         }
 

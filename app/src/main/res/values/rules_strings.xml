@@ -2,15 +2,11 @@
 <resources>
     <!-- Voice Rules Messages -->
     <string-array name="voice_rules_first">
-        <item>string 1</item>
-        <item>string 2</item>
-        <item>string 3</item>
-        <item>string 4</item>
-        <item>string 5</item>
+        <item>Try to Low Down Your Voice</item>
+        <item>Speak Quietly</item>
     </string-array>
     <string-array name="voice_rules_second">
-        <item>string 6</item>
-        <item>string 7</item>
+        <item>Speak Down</item>
         <item>string 8</item>
         <item>string 9</item>
         <item>string 10</item>
@@ -24,8 +20,6 @@
     </string-array>
     <!-- Fluency Rules Messages -->
     <string-array name="fluency_rules_first">
-        <item>string 1</item>
-        <item>string 2</item>
         <item>string 3</item>
         <item>string 4</item>
         <item>string 5</item>

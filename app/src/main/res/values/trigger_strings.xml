@@ -2,18 +2,10 @@
 <resources>
     <!-- Voice Trigger Messages -->
     <string-array name="voice_trigger_first">
-        <item>string 1</item>
-        <item>string 2</item>
-        <item>string 3</item>
-        <item>string 4</item>
-        <item>string 5</item>
+        <item>You are Speaking Too Loud</item>
     </string-array>
     <string-array name="voice_trigger_second">
-        <item>string 1</item>
-        <item>string 2</item>
-        <item>string 3</item>
-        <item>string 4</item>
-        <item>string 5</item>
+        <item>Your Voice is Too High Again</item>
     </string-array>
     <string-array name="voice_trigger_third">
         <item>string 1</item>

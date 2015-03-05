@@ -76,13 +76,24 @@
              timestamp view keeps a fixed width. If the footer text is too long, it
              will be ellipsized with a 40px margin between it and the timestamp. -->
 
-        <TextSwitcher
-            android:id="@+id/footer_textswitcher"
+        <ViewFlipper
+            android:id="@+id/footer"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:inAnimation="@android:anim/fade_in"
-            android:outAnimation="@android:anim/fade_out"></TextSwitcher>
+            android:outAnimation="@android:anim/fade_out">
+
+            <TextView
+                android:id="@+id/footer_trigger"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+
+            <TextView
+                android:id="@+id/footer_rules"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+        </ViewFlipper>
 
         <TextView
             android:id="@+id/timestamp"
