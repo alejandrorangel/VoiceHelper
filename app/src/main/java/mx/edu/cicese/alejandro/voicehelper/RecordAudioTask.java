@@ -54,7 +54,7 @@ public class RecordAudioTask extends AsyncTask<AudioClipListener, Void, Boolean>
         for (int i = 0; i < 10; i++) {
             try {
                 heard =
-                        recorder.startRecordingForTime(500,
+                        recorder.startRecordingForTime(R.integer.update_frequency,
                                 AudioClipRecorder.RECORDER_SAMPLERATE_CD,
                                 AudioFormat.ENCODING_PCM_16BIT);
                 break;

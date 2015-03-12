@@ -4,6 +4,8 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 
+import mx.edu.cicese.alejandro.voicehelper.R;
+
 public class SoundEffectPlayer {
     private MediaPlayer mShutter;
     private MediaPlayer mCamcorder;

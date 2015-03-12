@@ -12,10 +12,10 @@ import android.view.OrientationEventListener;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.glass.cuxtomcam.constants.CuxtomIntent.CAMERA_MODE;
-
 import java.io.IOException;
 import java.util.List;
+
+import mx.edu.cicese.alejandro.camera.constants.CuxtomIntent.CAMERA_MODE;
 
 public class CameraPreview extends SurfaceView implements
         SurfaceHolder.Callback, OnZoomChangeListener {

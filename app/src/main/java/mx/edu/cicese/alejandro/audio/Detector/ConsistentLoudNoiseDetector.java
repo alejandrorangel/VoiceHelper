@@ -19,9 +19,9 @@ public class ConsistentLoudNoiseDetector implements AudioClipListener {
     private double rangeThreshold;
     private double silenceThreshold;
 
-    private double lowPassAlpha = 0.6;
+    private double lowPassAlpha = 0.5;
     private double STARTING_AVERAGE = 200.0;
-    private double INCREASE_FACTOR = 4.0;
+    private double INCREASE_FACTOR = 4.5;
 
     public ConsistentLoudNoiseDetector(int historySize, int rangeThreshold,
                                        int silenceThreshold) {

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.PowerManager;
 import android.util.Log;
 import android.view.View;
@@ -23,34 +24,52 @@ import mx.edu.cicese.alejandro.audio.record.AudioClipListener;
 import mx.edu.cicese.alejandro.audio.record.OneDetectorManyObservers;
 import mx.edu.cicese.alejandro.rules.Mistep;
 import mx.edu.cicese.alejandro.rules.RulesEngine;
-import mx.edu.cicese.alejandro.voicehelper.views.AmplitudeCardView;
+import mx.edu.cicese.alejandro.voicehelper.views.AmplitudeCardCardView;
 
 public class MainActivity extends Activity {
 
     private static final String TAG = "VoiceTracker";
+    private final int delayTime = 5000;
+    PowerManager powerManager;
+    PowerManager.WakeLock wakeLock;
     private CardScrollView mCardScroller;
     private RecordAudioTask recordAudioTask;
     private Context context;
     private RulesEngine rulesEngine;
-
-    private AmplitudeCardView amplitudeCardView;
+    private Handler myHandler = new Handler();
+    private boolean mistepDetected = false;
+    private Runnable timeout = new Runnable() {
+        public void run() {
+            Log.d("VoiceHelper", "Timeout");
+            releaseScreen();
+            amplitudeCardView.clearFooterMessages();
+            mistepDetected = false;
+        }
+    };
+    private AmplitudeCardCardView amplitudeCardView;
 
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
+        init();
 
-        rulesEngine = new RulesEngine(this);
         EventBus.getDefault().register(this);
-        context = this.getApplicationContext();
         startTask(createAudioLogger(), "Voice Tracker");
+        setContentView(mCardScroller);
+    }
 
-        amplitudeCardView = new AmplitudeCardView(this.context);
-        View fluencyView = buildView(2);
+    protected void init() {
+        context = this.getApplicationContext();
+        rulesEngine = new RulesEngine(this);
+
+        powerManager = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
+        wakeLock = powerManager.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.FULL_WAKE_LOCK, "Wake Lock");
+
+        amplitudeCardView = new AmplitudeCardCardView(this.context);
 
         mCardScroller = new CardScrollView(this);
         CustomCardScrollAdapter mAdapter = new CustomCardScrollAdapter();
         mAdapter.addView(amplitudeCardView);
-        mAdapter.addView(fluencyView);
         mCardScroller.setAdapter(mAdapter);
         // Handle the TAP event.
         mCardScroller.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -61,8 +80,6 @@ public class MainActivity extends Activity {
                 am.playSoundEffect(Sounds.DISALLOWED);
             }
         });
-
-        setContentView(mCardScroller);
     }
 
     @Override
@@ -84,7 +101,7 @@ public class MainActivity extends Activity {
         View view;
         switch (value) {
             case 1:
-                view = new AmplitudeCardView(this.context);
+                view = new AmplitudeCardCardView(this.context);
 
                 break;
             case 2:
@@ -106,12 +123,10 @@ public class MainActivity extends Activity {
         return view;
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
     }
-
 
     @Override
     protected void onDestroy() {
@@ -172,11 +187,13 @@ public class MainActivity extends Activity {
     }
 
     public void turnOnScreen() {
-        PowerManager powerManager = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
-        PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.FULL_WAKE_LOCK, "Wake Lock");
         if (powerManager.isScreenOn() == false) {
             wakeLock.acquire();
         }
+
+    }
+
+    public void releaseScreen() {
         if (wakeLock.isHeld()) {
             wakeLock.release();
         }
@@ -184,10 +201,12 @@ public class MainActivity extends Activity {
 
     public void onEventMainThread(ConsistentLoudNoiseDetector event) {
         if (mCardScroller.getSelectedItemPosition() == 0) {
-            amplitudeCardView.setProgressBarValue((int) event.getCurrentVolume());
-            if (event.isTooLoud()) {
+            amplitudeCardView.updateScale((int) event.getCurrentVolume());
+            if (event.isTooLoud() && !mistepDetected) {
+                mistepDetected = true;
                 amplitudeCardView.incidentDetect(rulesEngine.addMistep(Mistep.Kind.VOICE));
                 turnOnScreen();
+                myHandler.postDelayed(timeout, delayTime);
             }
         }
     }

@@ -46,8 +46,4 @@ public class CustomCardScrollAdapter extends CardScrollAdapter {
         return viewArrayList.add(view);
     }
 
-    @Override
-    public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
-    }
 }

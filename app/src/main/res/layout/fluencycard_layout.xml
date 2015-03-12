@@ -14,20 +14,12 @@
         android:layout_marginTop="@dimen/glass_card_margin"
         tools:ignore="UselessLeaf">
 
-        <ImageView
-            android:id="@+id/speaker_imageview"
-            android:layout_width="75dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="0"
-            android:src="@drawable/speaker" />
-
         <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="@dimen/glass_card_body_height"
             android:layout_alignParentBottom="false"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/speaker_imageview"
-            android:layout_alignParentEnd="false">
+            android:layout_alignParentEnd="false"
+            android:layout_centerVertical="true">
 
 
             <ProgressBar
@@ -39,14 +31,6 @@
                 android:max="1400"
                 android:progressDrawable="@drawable/progressbar" />
 
-            <ImageView
-                android:id="@+id/scale_imageview"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="0"
-                android:scaleType="fitXY"
-                android:src="@drawable/vol" />
-
             <TextView
                 android:id="@+id/incident_textview"
                 android:layout_width="31dp"
@@ -56,6 +40,7 @@
                 android:gravity="center"
                 android:text="1"
                 android:textAlignment="center" />
+
         </FrameLayout>
 
     </RelativeLayout>
@@ -74,14 +59,25 @@
              timestamp view keeps a fixed width. If the footer text is too long, it
              will be ellipsized with a 40px margin between it and the timestamp. -->
 
-        <TextSwitcher
-            android:id="@+id/footer_textswitcher"
+        <ViewFlipper
+            android:id="@+id/footer"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:inAnimation="@android:anim/fade_in"
             android:outAnimation="@android:anim/fade_out">
-        </TextSwitcher>
+
+            <TextView
+                android:id="@+id/footer_trigger"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="@string/cicese_placeholder" />
+
+            <TextView
+                android:id="@+id/footer_rules"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+        </ViewFlipper>
 
         <TextView
             android:id="@+id/timestamp"

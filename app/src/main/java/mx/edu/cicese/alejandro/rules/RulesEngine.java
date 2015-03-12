@@ -12,15 +12,15 @@ import mx.edu.cicese.alejandro.voicehelper.R;
 /**
  * Created by Alejandro on 3/2/15.
  * TODO
- * This is a temporaly name, I have to find a better name for this class
  */
 public class RulesEngine {
-    ArrayList<Mistep> mistepsArrayList;
+    ArrayList<Mistep> arrayList;
     Context context;
+
 
     public RulesEngine(Context context) {
         this.context = context;
-        this.mistepsArrayList = new ArrayList<Mistep>();
+        this.arrayList = new ArrayList<Mistep>();
     }
 
     public Mistep addMistep(Mistep.Kind kind) {
@@ -31,19 +31,19 @@ public class RulesEngine {
         newMistep.setTriggerMessege(selectTringgerString(kind));
         newMistep.setRulesMessege(selectRulesString(kind));
 
-        newMistep.setNumberOfIncident(checkNumberOfMisteps(kind));
+        newMistep.setNumberOfIncident(checkNumberOfMisteps(kind) + 1);
 
         Log.d("VoiceHelper", newMistep.getTriggerMessege());
 
         /** parte para agregar**/
-        mistepsArrayList.add(newMistep);
+        arrayList.add(newMistep);
 
         return newMistep;
     }
 
     public int checkNumberOfMisteps(Mistep.Kind kind) {
         int count = 0;
-        for (Mistep Mistep : mistepsArrayList) {
+        for (Mistep Mistep : arrayList) {
             if (Mistep.kindOf == kind)
                 count++;
         }
@@ -90,8 +90,6 @@ public class RulesEngine {
                 strings = res.getStringArray(R.array.emotion_trigger_third);
             }
         }
-
-
         return strings[new Random().nextInt(strings.length)];
     }
 
