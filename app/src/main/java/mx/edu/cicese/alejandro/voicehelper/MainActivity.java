@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.google.android.glass.media.Sounds;
-import com.google.android.glass.widget.CardBuilder;
 import com.google.android.glass.widget.CardScrollView;
 
 import java.util.ArrayList;
@@ -25,6 +24,8 @@ import mx.edu.cicese.alejandro.audio.record.OneDetectorManyObservers;
 import mx.edu.cicese.alejandro.rules.Mistep;
 import mx.edu.cicese.alejandro.rules.RulesEngine;
 import mx.edu.cicese.alejandro.voicehelper.views.AmplitudeCardCardView;
+import mx.edu.cicese.alejandro.voicehelper.views.CustomCardScrollAdapter;
+import mx.edu.cicese.alejandro.voicehelper.views.FluencyCardView;
 
 public class MainActivity extends Activity {
 
@@ -47,6 +48,7 @@ public class MainActivity extends Activity {
         }
     };
     private AmplitudeCardCardView amplitudeCardView;
+    private FluencyCardView fluencyCardView;
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -66,10 +68,12 @@ public class MainActivity extends Activity {
         wakeLock = powerManager.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.FULL_WAKE_LOCK, "Wake Lock");
 
         amplitudeCardView = new AmplitudeCardCardView(this.context);
+        fluencyCardView = new FluencyCardView(this.context);
 
         mCardScroller = new CardScrollView(this);
         CustomCardScrollAdapter mAdapter = new CustomCardScrollAdapter();
         mAdapter.addView(amplitudeCardView);
+        mAdapter.addView(fluencyCardView);
         mCardScroller.setAdapter(mAdapter);
         // Handle the TAP event.
         mCardScroller.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -94,34 +98,6 @@ public class MainActivity extends Activity {
         super.onPause();
     }
 
-    /**
-     * Builds a Glass styled "Hello World!" view using the {@link CardBuilder} class.
-     */
-    private View buildView(int value) {
-        View view;
-        switch (value) {
-            case 1:
-                view = new AmplitudeCardCardView(this.context);
-
-                break;
-            case 2:
-                view = new CardBuilder(this, CardBuilder.Layout.EMBED_INSIDE)
-                        .setEmbeddedLayout(R.layout.activity_fluency)
-                        .setFootnote("Check your fluency")
-                        .setTimestamp("CICESE")
-                        .getView();
-                break;
-            default:
-                view = new CardBuilder(this, CardBuilder.Layout.EMBED_INSIDE)
-                        .setEmbeddedLayout(R.layout.activity_main)
-                        .setFootnote("Foods you tracked")
-                        .setTimestamp("CICESE")
-                        .getView();
-                break;
-
-        }
-        return view;
-    }
 
     @Override
     protected void onStart() {

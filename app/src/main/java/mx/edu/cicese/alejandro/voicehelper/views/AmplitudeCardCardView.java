@@ -2,6 +2,7 @@ package mx.edu.cicese.alejandro.voicehelper.views;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
@@ -25,6 +26,7 @@ public class AmplitudeCardCardView extends FrameLayout implements MistepCardView
     private TextView mistepCounter;
     private ViewFlipper mViewFlipper;
     private ObjectAnimator animation;
+    private Resources res;
 
     public AmplitudeCardCardView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -42,6 +44,7 @@ public class AmplitudeCardCardView extends FrameLayout implements MistepCardView
     }
 
     private void initView() {
+        res = this.getResources();
         View view = inflate(getContext(), R.layout.amplitudecard_layout, null);
 
         mistepCounter = (TextView) view.findViewById(R.id.incident_textview);
@@ -71,7 +74,7 @@ public class AmplitudeCardCardView extends FrameLayout implements MistepCardView
     @Override
     public void updateScale(int value) {
         animation = ObjectAnimator.ofInt(progressBar, "progress", value);
-        animation.setDuration(R.integer.update_frequency);
+        animation.setDuration(res.getInteger(R.integer.update_frequency));
         animation.setInterpolator(new DecelerateInterpolator());
 
         animation.start();

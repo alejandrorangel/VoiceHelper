@@ -1,4 +1,4 @@
-package mx.edu.cicese.alejandro.voicehelper;
+package mx.edu.cicese.alejandro.voicehelper.views;
 
 import android.view.View;
 import android.view.ViewGroup;

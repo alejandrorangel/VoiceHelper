@@ -29,7 +29,7 @@ public class FluencyCardView extends FrameLayout implements MistepCardView {
     }
 
     public void initView() {
-        View view = inflate(getContext(), R.layout.amplitudecard_layout, null);
+        View view = inflate(getContext(), R.layout.fluencycard_layout, null);
 
         mistepCounter = (TextView) view.findViewById(R.id.incident_textview);
         progressBar = (ProgressBar) view.findViewById(R.id.progressbar);

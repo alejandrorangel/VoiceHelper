@@ -5,7 +5,7 @@ package mx.edu.cicese.alejandro.rules;
  */
 public class Mistep {
     Kind kindOf;
-    long timepstamp;
+    long detectionTime;
     String triggerMessege;
     String RulesMessege;
     int numberOfIncident;
@@ -14,9 +14,9 @@ public class Mistep {
         this.kindOf = kindOf;
     }
 
-    public Mistep(Kind kindOf, long timepstamp) {
+    public Mistep(Kind kindOf, long detectionTime) {
         this.kindOf = kindOf;
-        this.timepstamp = timepstamp;
+        this.detectionTime = detectionTime;
     }
 
     public int getNumberOfIncident() {
@@ -43,8 +43,8 @@ public class Mistep {
         this.triggerMessege = triggerMessege;
     }
 
-    public void setTimepstamp(long timepstamp) {
-        this.timepstamp = timepstamp;
+    public void setDetectionTime(long detectionTime) {
+        this.detectionTime = detectionTime;
     }
 
     public Kind getKindOf() {

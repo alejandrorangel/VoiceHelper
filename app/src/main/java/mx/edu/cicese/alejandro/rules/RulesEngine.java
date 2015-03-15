@@ -31,7 +31,7 @@ public class RulesEngine {
         newMistep.setTriggerMessege(selectTringgerString(kind));
         newMistep.setRulesMessege(selectRulesString(kind));
 
-        newMistep.setNumberOfIncident(checkNumberOfMisteps(kind) + 1);
+        newMistep.setNumberOfIncident(getNumberOfMistep(kind) + 1);
 
         Log.d("VoiceHelper", newMistep.getTriggerMessege());
 
@@ -41,7 +41,7 @@ public class RulesEngine {
         return newMistep;
     }
 
-    public int checkNumberOfMisteps(Mistep.Kind kind) {
+    public int getNumberOfMistep(Mistep.Kind kind) {
         int count = 0;
         for (Mistep Mistep : arrayList) {
             if (Mistep.kindOf == kind)
@@ -51,11 +51,72 @@ public class RulesEngine {
     }
 
 
+    public String getTriggerMessage(Mistep.Kind kind, int tier) {
+        String[] strings = null;
+        String message;
+        Resources res = context.getResources();
+        switch (kind) {
+            case EMOTION:
+                switch (tier) {
+                    case 1:
+                        strings = res.getStringArray(R.array.emotion_trigger_first);
+                        break;
+                    case 2:
+                        strings = res.getStringArray(R.array.emotion_trigger_second);
+                        break;
+                    case 3:
+                        strings = res.getStringArray(R.array.emotion_trigger_third);
+                        break;
+                    default:
+                        strings = null;
+                }
+                break;
+            case VOICE:
+                switch (tier) {
+                    case 1:
+                        strings = res.getStringArray(R.array.voice_rules_first);
+                        break;
+                    case 2:
+                        strings = res.getStringArray(R.array.voice_rules_second);
+                        break;
+                    case 3:
+                        strings = res.getStringArray(R.array.voice_rules_third);
+                        break;
+                    default:
+                        strings = null;
+                }
+                break;
+            case FLUENCY:
+                switch (tier) {
+                    case 1:
+                        strings = res.getStringArray(R.array.fluency_rules_first);
+                        break;
+                    case 2:
+                        strings = res.getStringArray(R.array.fluency_rules_second);
+                        break;
+                    case 3:
+                        strings = res.getStringArray(R.array.fluency_rules_third);
+                        break;
+                    default:
+                        strings = null;
+                }
+                break;
+            default:
+                strings = null;
+        }
+        if (strings != null)
+            message = strings[new Random().nextInt(strings.length)];
+        else
+            message = res.getString(R.string.cicese_placeholder);
+
+        return message;
+    }
+
     /**
      * Revisar... con quedo muy limpio que digamos
      */
     public String selectTringgerString(Mistep.Kind kind) {
-        int numberOfIncidents = checkNumberOfMisteps(kind);
+        int numberOfIncidents = getNumberOfMistep(kind);
         Resources res = context.getResources();
         String[] strings = null;
 
@@ -97,7 +158,7 @@ public class RulesEngine {
      * --Replicado de Trigger-- Revisar... con quedo muy limpio que digamos
      */
     public String selectRulesString(Mistep.Kind kind) {
-        int numberOfIncidents = checkNumberOfMisteps(kind);
+        int numberOfIncidents = getNumberOfMistep(kind);
         Resources res = context.getResources();
         String[] strings = null;
 

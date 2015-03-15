@@ -16,6 +16,7 @@
 package mx.edu.cicese.alejandro.voicehelper;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.media.AudioFormat;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -45,16 +46,17 @@ public class RecordAudioTask extends AsyncTask<AudioClipListener, Void, Boolean>
         if (listeners.length == 0) {
             return (Boolean) false;
         }
-
+        Resources res = context.getResources();
         AudioClipListener listener = listeners[0];
 
         AudioClipRecorder recorder = new AudioClipRecorder(listener, this);
 
         boolean heard = false;
+        // Try 10 times to initilize the recorder
         for (int i = 0; i < 10; i++) {
             try {
                 heard =
-                        recorder.startRecordingForTime(R.integer.update_frequency,
+                        recorder.startRecordingForTime(res.getInteger(R.integer.update_frequency),
                                 AudioClipRecorder.RECORDER_SAMPLERATE_CD,
                                 AudioFormat.ENCODING_PCM_16BIT);
                 break;
@@ -79,7 +81,7 @@ public class RecordAudioTask extends AsyncTask<AudioClipListener, Void, Boolean>
         //add to log
         //redraw perhaps
         if (result) {
-            Log.d(TAG, getTaskName() + " detected " + AudioTaskUtil.getNow());
+            //Log.d(TAG, getTaskName() + " detected " + AudioTaskUtil.getNow());
             //AudioTaskUtil.appendToStartOfLog(log, getTaskName() + " detected " + AudioTaskUtil.getNow());
         } else {
             Log.d(TAG, "stopped");
