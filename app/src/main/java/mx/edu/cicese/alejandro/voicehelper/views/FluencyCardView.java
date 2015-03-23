@@ -2,10 +2,12 @@ package mx.edu.cicese.alejandro.voicehelper.views;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
-import android.widget.ProgressBar;
+import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -16,10 +18,11 @@ import mx.edu.cicese.alejandro.voicehelper.R;
  * Created by Alejandro on 3/11/15.
  */
 public class FluencyCardView extends FrameLayout implements MistepCardView {
-    private ProgressBar progressBar;
+    private SeekBar progressBar;
     private TextView triggerTextView;
     private TextView rulesTextView;
     private TextView mistepCounter;
+    private AnimationDrawable bunnyAnimation;
     private ViewFlipper mViewFlipper;
     private ObjectAnimator animation;
 
@@ -29,15 +32,21 @@ public class FluencyCardView extends FrameLayout implements MistepCardView {
     }
 
     public void initView() {
+
         View view = inflate(getContext(), R.layout.fluencycard_layout, null);
 
         mistepCounter = (TextView) view.findViewById(R.id.incident_textview);
-        progressBar = (ProgressBar) view.findViewById(R.id.progressbar);
+        progressBar = (SeekBar) view.findViewById(R.id.progressBar);
         rulesTextView = (TextView) view.findViewById(R.id.footer_rules);
         triggerTextView = (TextView) view.findViewById(R.id.footer_trigger);
+        progressBar.setThumb(bunnyAnimation);
 
         mViewFlipper = (ViewFlipper) view.findViewById(R.id.footer);
         mViewFlipper.setFlipInterval(R.integer.footer_flip_interval);
+        ImageView bunnyImage = new ImageView(getContext());
+        bunnyImage.setBackgroundResource(R.drawable.bunny_animation);
+        bunnyAnimation = (AnimationDrawable) bunnyImage.getBackground();
+        bunnyAnimation.start();
 
         addView(view);
     }

@@ -57,7 +57,7 @@ public class RecordAudioTask extends AsyncTask<AudioClipListener, Void, Boolean>
             try {
                 heard =
                         recorder.startRecordingForTime(res.getInteger(R.integer.update_frequency),
-                                AudioClipRecorder.RECORDER_SAMPLERATE_CD,
+                                AudioClipRecorder.RECORDER_SAMPLERATE_8000,
                                 AudioFormat.ENCODING_PCM_16BIT);
                 break;
             } catch (IllegalStateException ie) {

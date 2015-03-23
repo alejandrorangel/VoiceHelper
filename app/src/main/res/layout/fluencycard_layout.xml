@@ -22,14 +22,15 @@
             android:layout_centerVertical="true">
 
 
-            <ProgressBar
-                android:id="@+id/progressbar"
+            <SeekBar
+                android:id="@+id/progressBar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:max="1400"
-                android:progressDrawable="@drawable/progressbar" />
+                android:progress="700"
+                android:thumb="@drawable/bunny_animation" />
 
             <TextView
                 android:id="@+id/incident_textview"

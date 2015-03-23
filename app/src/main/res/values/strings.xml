@@ -3,4 +3,124 @@
     <string name="title_activity_main">Voice Helper</string>
     <string name="hello_world">Hello world!</string>
     <string name="cicese_placeholder">CICESE</string>
+
+    <!-- Voice Trigger Messages -->
+    <string-array name="voice_trigger_first">
+        <item>You are Speaking Too Loud</item>
+    </string-array>
+    <string-array name="voice_trigger_second">
+        <item>Your Voice is Too High Again</item>
+    </string-array>
+    <string-array name="voice_trigger_third">
+        <item>string 1</item>
+        <item>string 2</item>
+        <item>string 3</item>
+        <item>string 4</item>
+        <item>string 5</item>
+    </string-array>
+    <!-- Fluency Trigger Messages -->
+    <string-array name="fluency_trigger_first">
+        <item>string 1</item>
+        <item>string 2</item>
+        <item>string 3</item>
+        <item>string 4</item>
+        <item>string 5</item>
+    </string-array>
+    <string-array name="fluency_trigger_second">
+        <item>string 1</item>
+        <item>string 2</item>
+        <item>string 3</item>
+        <item>string 4</item>
+        <item>string 5</item>
+    </string-array>
+    <string-array name="fluency_trigger_third">
+        <item>string 1</item>
+        <item>string 2</item>
+        <item>string 3</item>
+        <item>string 4</item>
+        <item>string 5</item>
+    </string-array>
+    <!-- Emotion Trigger Messages -->
+    <string-array name="emotion_trigger_first">
+        <item>string 1</item>
+        <item>string 2</item>
+        <item>string 3</item>
+        <item>string 4</item>
+        <item>string 5</item>
+    </string-array>
+    <string-array name="emotion_trigger_second">
+        <item>string 1</item>
+        <item>string 2</item>
+        <item>string 3</item>
+        <item>string 4</item>
+        <item>string 5</item>
+    </string-array>
+    <string-array name="emotion_trigger_third">
+        <item>string 1</item>
+        <item>string 2</item>
+        <item>string 3</item>
+        <item>string 4</item>
+        <item>string 5</item>
+    </string-array>
+
+    <!-- Voice Rules Messages -->
+    <string-array name="voice_rules_first">
+        <item>Try to Low Down Your Voice</item>
+        <item>Speak Quietly</item>
+    </string-array>
+    <string-array name="voice_rules_second">
+        <item>Speak Down</item>
+        <item>string 8</item>
+        <item>string 9</item>
+        <item>string 10</item>
+    </string-array>
+    <string-array name="voice_rules_third">
+        <item>string 11</item>
+        <item>string 12</item>
+        <item>string 13</item>
+        <item>string 14</item>
+        <item>string 15</item>
+    </string-array>
+    <!-- Fluency Rules Messages -->
+    <string-array name="fluency_rules_first">
+        <item>string 3</item>
+        <item>string 4</item>
+        <item>string 5</item>
+    </string-array>
+    <string-array name="fluency_rules_second">
+        <item>string 1</item>
+        <item>string 2</item>
+        <item>string 3</item>
+        <item>string 4</item>
+        <item>string 5</item>
+    </string-array>
+    <string-array name="fluency_rules_third">
+        <item>string 1</item>
+        <item>string 2</item>
+        <item>string 3</item>
+        <item>string 4</item>
+        <item>string 5</item>
+    </string-array>
+    <!-- Emotion Rules Messages -->
+    <string-array name="emotion_rules_first">
+        <item>string 1</item>
+        <item>string 2</item>
+        <item>string 3</item>
+        <item>string 4</item>
+        <item>string 5</item>
+    </string-array>
+    <string-array name="emotion_rules_second">
+        <item>string 1</item>
+        <item>string 2</item>
+        <item>string 3</item>
+        <item>string 4</item>
+        <item>string 5</item>
+    </string-array>
+    <string-array name="emotion_rules_third">
+        <item>string 1</item>
+        <item>string 2</item>
+        <item>string 3</item>
+        <item>string 4</item>
+        <item>string 5</item>
+    </string-array>
 </resources>
