@@ -14,21 +14,40 @@
         android:layout_height="wrap_content"
         android:text="@string/hello_world" />
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/speaker" />
+
     <SeekBar
         android:id="@+id/seekBar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView" />
+        android:layout_below="@+id/imageView"
+        android:max="1400"
+        android:progress="700"
+        android:progressDrawable="@drawable/progressbar" />
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_below="@+id/seekBar"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/bunny" />
     <SeekBar
         android:id="@+id/seekBar2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/seekBar" />
+        android:layout_below="@+id/imageView2"
+        android:max="1400"
+        android:progress="700"
+        android:progressDrawable="@drawable/progressbar" />
 
     <Button
         android:id="@+id/button"

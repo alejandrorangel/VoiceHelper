@@ -2,9 +2,9 @@
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:oneshot="false">
     <item
-        android:drawable="@drawable/bunny_sit"
+        android:drawable="@drawable/bunny_jump"
         android:duration="400" />
     <item
-        android:drawable="@drawable/bunny_jump"
+        android:drawable="@drawable/bunny_sit"
         android:duration="400" />
 </animation-list>

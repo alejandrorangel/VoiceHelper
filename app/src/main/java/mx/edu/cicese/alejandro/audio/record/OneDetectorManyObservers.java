@@ -44,4 +44,6 @@ public class OneDetectorManyObservers implements AudioClipListener
         
         return detector.heard(audioData, sampleRate);
     }
+
+
 }

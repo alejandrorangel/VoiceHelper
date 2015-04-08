@@ -46,8 +46,8 @@ public class ConsistentLoudNoiseDetector implements AudioClipListener {
 
         volumeThreshold = averageVolume * INCREASE_FACTOR;
 
-        Log.d("VoiceHelper", "actual: " + currentVolume + " promedio: " + averageVolume
-                + " threshold: " + volumeThreshold);
+        //Log.d("VoiceHelper", "actual: " + currentVolume + " promedio: " + averageVolume
+        //   + " threshold: " + volumeThreshold);
 
         if (currentVolume < volumeThreshold)
             averageVolume = lowPass(currentVolume, averageVolume);

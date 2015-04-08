@@ -39,6 +39,7 @@ public class MainActivity extends Activity {
     private RulesEngine rulesEngine;
     private Handler myHandler = new Handler();
     private boolean mistepDetected = false;
+    private AmplitudeCardCardView amplitudeCardView;
     private Runnable timeout = new Runnable() {
         public void run() {
             Log.d("VoiceHelper", "Timeout");
@@ -47,7 +48,6 @@ public class MainActivity extends Activity {
             mistepDetected = false;
         }
     };
-    private AmplitudeCardCardView amplitudeCardView;
     private FluencyCardView fluencyCardView;
 
     @Override
@@ -82,6 +82,7 @@ public class MainActivity extends Activity {
                 // Plays disallowed sound to indicate that TAP actions are not supported.
                 AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
                 am.playSoundEffect(Sounds.DISALLOWED);
+                getWindow().getDecorView().findViewById(android.R.id.content).invalidate();
             }
         });
     }

@@ -3,13 +3,14 @@
     package="mx.edu.cicese.alejandro.voicehelper"
     android:versionName="0.1 Beta">
 
-
-<uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".VoiceHelper"

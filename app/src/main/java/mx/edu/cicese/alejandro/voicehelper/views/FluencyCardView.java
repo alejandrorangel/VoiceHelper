@@ -39,15 +39,30 @@ public class FluencyCardView extends FrameLayout implements MistepCardView {
         progressBar = (SeekBar) view.findViewById(R.id.progressBar);
         rulesTextView = (TextView) view.findViewById(R.id.footer_rules);
         triggerTextView = (TextView) view.findViewById(R.id.footer_trigger);
-        progressBar.setThumb(bunnyAnimation);
+
 
         mViewFlipper = (ViewFlipper) view.findViewById(R.id.footer);
         mViewFlipper.setFlipInterval(R.integer.footer_flip_interval);
         ImageView bunnyImage = new ImageView(getContext());
         bunnyImage.setBackgroundResource(R.drawable.bunny_animation);
         bunnyAnimation = (AnimationDrawable) bunnyImage.getBackground();
-        bunnyAnimation.start();
+        progressBar.setThumb(bunnyAnimation);
+//
+//        new Thread(new Runnable() {
+//            public void run() {
+//
+//                try {
+//                    Thread.sleep(400);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//                invalidate();
+//                Log.d("HOla","Hola");
+//            }
+//            //starts the thread
+//        }).start();
 
+        bunnyAnimation.start();
         addView(view);
     }
 
@@ -89,4 +104,5 @@ public class FluencyCardView extends FrameLayout implements MistepCardView {
 
         this.mViewFlipper.startFlipping();
     }
+
 }

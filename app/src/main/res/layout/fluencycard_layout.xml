@@ -29,8 +29,8 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:max="1400"
-                android:progress="700"
-                android:thumb="@drawable/bunny_animation" />
+                android:progress="300"
+                android:thumb="@drawable/thumb_drawable" />
 
             <TextView
                 android:id="@+id/incident_textview"

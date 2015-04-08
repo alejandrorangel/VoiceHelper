@@ -7,6 +7,17 @@ import android.media.MediaRecorder.AudioSource;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import mx.edu.cicese.alejandro.voicehelper.Sample;
+
 /**
  * record an audio clip and pass it to the listener
  *
@@ -135,11 +146,12 @@ public class AudioClipRecorder {
                 recordingBufferSize * bufferIncreaseFactor;
 
         recorder =
-                new AudioRecord(AudioSource.MIC, sampleRate,
+                new AudioRecord(AudioSource.VOICE_COMMUNICATION, sampleRate,
                         AudioFormat.CHANNEL_IN_MONO, encoding,
                         increasedRecordingBufferSize);
 
         final short[] readBuffer = new short[readBufferSize];
+        final byte[] readBufferByte = new byte[readBufferSize];
 
         continueRecording = true;
         Log.d(TAG, "start recording, " + "recording bufferSize: "
@@ -154,6 +166,8 @@ public class AudioClipRecorder {
         while (continueRecording) {
             int bufferResult = recorder.read(readBuffer, 0, readBufferSize);
 
+            recorder.read(readBufferByte, 0, readBufferSize);
+
 
             //in case external code stopped this while read was happening
             if ((!continueRecording) || ((task != null) && task.isCancelled())) {
@@ -167,7 +181,29 @@ public class AudioClipRecorder {
             } else
             // no errors, do processing
             {
+
+                //TODO cambiar esto de lugar
+                // The connection URL
+                // String url = "https://ajax.googleapis.com/ajax/"+"services/search/web?v=1.0&q={query}";
+                String url = "http://169.254.26.198:5984/waes/{query}";
+                // Create a new RestTemplate instance
+                RestTemplate restTemplate = new RestTemplate();
+
+                // Add the String message converter
+                restTemplate.setMessageConverters(getMessageConverters());
+
+                Sample newSample = new Sample();
+
+                newSample.setAudioDataShort(readBuffer);
+                Log.d("Hola", readBufferByte.toString());
+                newSample.setAudioDataByte(readBufferByte);
+                newSample.setSampleRate(sampleRate);
+
+                restTemplate.put(url, newSample, UUID.randomUUID().toString());
+
+
                 heard = clipListener.heard(readBuffer, sampleRate);
+
 
                 if (heard) {
                     stopRecording();
@@ -228,5 +264,12 @@ public class AudioClipRecorder {
         // get notified after so many samples collected
         recorder.setPositionNotificationPeriod(numSamplesInBuffer);
         recorder.setRecordPositionUpdateListener(positionUpdater);
+    }
+
+    private List<HttpMessageConverter<?>> getMessageConverters() {
+        List<HttpMessageConverter<?>> converters = new ArrayList<HttpMessageConverter<?>>();
+        converters.add(new MappingJackson2HttpMessageConverter());
+        converters.add(new StringHttpMessageConverter());
+        return converters;
     }
 }
