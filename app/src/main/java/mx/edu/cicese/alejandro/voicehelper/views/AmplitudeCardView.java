@@ -3,7 +3,9 @@ package mx.edu.cicese.alejandro.voicehelper.views;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
@@ -19,7 +21,8 @@ import mx.edu.cicese.alejandro.voicehelper.R;
  */
 
 
-public class AmplitudeCardCardView extends FrameLayout implements MistepCardView {
+public class AmplitudeCardView extends FrameLayout implements MistepCardView {
+    private final int delayTime = 5000;
     private ProgressBar progressBar;
     private TextView triggerTextView;
     private TextView rulesTextView;
@@ -27,18 +30,27 @@ public class AmplitudeCardCardView extends FrameLayout implements MistepCardView
     private ViewFlipper mViewFlipper;
     private ObjectAnimator animation;
     private Resources res;
+    private Handler myHandler = new Handler();
 
-    public AmplitudeCardCardView(Context context, AttributeSet attrs, int defStyle) {
+    private Runnable timeout = new Runnable() {
+        public void run() {
+            Log.d("VoiceHelper", "Timeout");
+            //releaseScreen();
+            clearFooterMessages();
+        }
+    };
+
+    public AmplitudeCardView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initView();
     }
 
-    public AmplitudeCardCardView(Context context, AttributeSet attrs) {
+    public AmplitudeCardView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView();
     }
 
-    public AmplitudeCardCardView(Context context) {
+    public AmplitudeCardView(Context context) {
         super(context);
         initView();
     }
@@ -58,11 +70,12 @@ public class AmplitudeCardCardView extends FrameLayout implements MistepCardView
         addView(view);
     }
 
-    public void incidentDetect(Mistep mistep) {
+    public void mistepDetect(Mistep mistep) {
         mistepCounter.setText(String.valueOf(mistep.getNumberOfIncident()));
         updateTriggerMessage(mistep.getTriggerMessege());
         updateRulesMessage(mistep.getRulesMessege());
         mViewFlipper.startFlipping();
+        myHandler.postDelayed(timeout, delayTime);
     }
 
     public void clearFooterMessages() {

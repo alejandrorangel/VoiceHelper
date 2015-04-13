@@ -3,9 +3,7 @@ package mx.edu.cicese.alejandro.voicehelper;
 import android.app.Activity;
 import android.content.Context;
 import android.media.AudioManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.PowerManager;
 import android.util.Log;
 import android.view.View;
@@ -19,45 +17,27 @@ import java.util.List;
 
 import de.greenrobot.event.EventBus;
 import mx.edu.cicese.alejandro.audio.Detector.ConsistentLoudNoiseDetector;
+import mx.edu.cicese.alejandro.audio.Detector.PitchDetector;
 import mx.edu.cicese.alejandro.audio.record.AudioClipListener;
 import mx.edu.cicese.alejandro.audio.record.OneDetectorManyObservers;
 import mx.edu.cicese.alejandro.rules.Mistep;
 import mx.edu.cicese.alejandro.rules.RulesEngine;
-import mx.edu.cicese.alejandro.voicehelper.views.AmplitudeCardCardView;
+import mx.edu.cicese.alejandro.voicehelper.views.AmplitudeCardView;
 import mx.edu.cicese.alejandro.voicehelper.views.CustomCardScrollAdapter;
 import mx.edu.cicese.alejandro.voicehelper.views.FluencyCardView;
+import mx.edu.cicese.alejandro.voicehelper.views.PitchCardView;
 
 public class MainActivity extends Activity {
 
     private static final String TAG = "VoiceTracker";
-    private final int delayTime = 5000;
-    PowerManager powerManager;
-    PowerManager.WakeLock wakeLock;
-    private CardScrollView mCardScroller;
-    private RecordAudioTask recordAudioTask;
-    private Context context;
-    private RulesEngine rulesEngine;
-    private Handler myHandler = new Handler();
-    private boolean mistepDetected = false;
-    private AmplitudeCardCardView amplitudeCardView;
-    private Runnable timeout = new Runnable() {
-        public void run() {
-            Log.d("VoiceHelper", "Timeout");
-            releaseScreen();
-            amplitudeCardView.clearFooterMessages();
-            mistepDetected = false;
-        }
-    };
-    private FluencyCardView fluencyCardView;
 
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         init();
-
-        EventBus.getDefault().register(this);
         startTask(createAudioLogger(), "Voice Tracker");
         setContentView(mCardScroller);
+        EventBus.getDefault().register(this);
     }
 
     protected void init() {
@@ -67,13 +47,14 @@ public class MainActivity extends Activity {
         powerManager = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
         wakeLock = powerManager.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.FULL_WAKE_LOCK, "Wake Lock");
 
-        amplitudeCardView = new AmplitudeCardCardView(this.context);
+        amplitudeCardView = new AmplitudeCardView(this.context);
         fluencyCardView = new FluencyCardView(this.context);
-
+        pitchCardView = new PitchCardView(this.context);
         mCardScroller = new CardScrollView(this);
         CustomCardScrollAdapter mAdapter = new CustomCardScrollAdapter();
         mAdapter.addView(amplitudeCardView);
         mAdapter.addView(fluencyCardView);
+        mAdapter.addView(pitchCardView);
         mCardScroller.setAdapter(mAdapter);
         // Handle the TAP event.
         mCardScroller.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -107,41 +88,21 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onDestroy() {
-        stopAll();
+        _audioDetectorRunnable.interrupt();
         EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
 
     private void startTask(AudioClipListener detector, String name) {
-        stopAll();
-
-        recordAudioTask = new RecordAudioTask(MainActivity.this, name);
         List<AudioClipListener> observers = new ArrayList<>();
         observers.add(new ConsistentLoudNoiseDetector(2, 200, 200));
-        //observers.add(new AudioClipLogWrapper(this));
-        //observers.add(new AudioClipLogFixedWrapper(this));
+        observers.add(new PitchDetector());
         OneDetectorManyObservers wrapped =
                 new OneDetectorManyObservers(detector, observers);
-        recordAudioTask.execute(wrapped);
+        _audioDetectorRunnable = new Thread(new RecordAudioRunnable(this, wrapped));
+        _audioDetectorRunnable.start();
     }
 
-    private void stopAll() {
-        Log.d(TAG, "stop record audio");
-        shutDownTaskIfNecessary(recordAudioTask);
-    }
-
-    private void shutDownTaskIfNecessary(final AsyncTask task) {
-        if ((task != null) && (!task.isCancelled())) {
-            if ((task.getStatus().equals(AsyncTask.Status.RUNNING))
-                    || (task.getStatus()
-                    .equals(AsyncTask.Status.PENDING))) {
-                Log.d(TAG, "CANCEL " + task.getClass().getSimpleName());
-                task.cancel(true);
-            } else {
-                Log.d(TAG, "task not running");
-            }
-        }
-    }
 
     /*
     TODO Esto se puede cambiar
@@ -165,15 +126,9 @@ public class MainActivity extends Activity {
 
     public void turnOnScreen() {
         if (powerManager.isScreenOn() == false) {
-            wakeLock.acquire();
+            wakeLock.acquire(3000);
         }
 
-    }
-
-    public void releaseScreen() {
-        if (wakeLock.isHeld()) {
-            wakeLock.release();
-        }
     }
 
     public void onEventMainThread(ConsistentLoudNoiseDetector event) {
@@ -181,11 +136,30 @@ public class MainActivity extends Activity {
             amplitudeCardView.updateScale((int) event.getCurrentVolume());
             if (event.isTooLoud() && !mistepDetected) {
                 mistepDetected = true;
-                amplitudeCardView.incidentDetect(rulesEngine.addMistep(Mistep.Kind.VOICE));
+                amplitudeCardView.mistepDetect(rulesEngine.addMistep(Mistep.Kind.VOICE));
                 turnOnScreen();
-                myHandler.postDelayed(timeout, delayTime);
             }
         }
     }
 
+    public void onEventMainThread(PitchDetector event) {
+        Log.d(TAG, "PitchDetector " + event.getPitchValue());
+        if (mCardScroller.getSelectedItemPosition() == 2) {
+            pitchCardView.updateScale(event.getPitchValue());
+        }
+    }
+
+
+    PowerManager powerManager;
+    PowerManager.WakeLock wakeLock;
+    private CardScrollView mCardScroller;
+    private Context context;
+    private RulesEngine rulesEngine;
+    private boolean mistepDetected = false;
+
+    private AmplitudeCardView amplitudeCardView;
+    private PitchCardView pitchCardView;
+    private FluencyCardView fluencyCardView;
+
+    Thread _audioDetectorRunnable;
 }

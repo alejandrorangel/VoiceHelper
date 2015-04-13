@@ -47,21 +47,6 @@ public class FluencyCardView extends FrameLayout implements MistepCardView {
         bunnyImage.setBackgroundResource(R.drawable.bunny_animation);
         bunnyAnimation = (AnimationDrawable) bunnyImage.getBackground();
         progressBar.setThumb(bunnyAnimation);
-//
-//        new Thread(new Runnable() {
-//            public void run() {
-//
-//                try {
-//                    Thread.sleep(400);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//                invalidate();
-//                Log.d("HOla","Hola");
-//            }
-//            //starts the thread
-//        }).start();
-
         bunnyAnimation.start();
         addView(view);
     }

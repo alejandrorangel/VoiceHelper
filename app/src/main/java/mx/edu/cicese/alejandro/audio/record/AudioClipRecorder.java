@@ -151,7 +151,6 @@ public class AudioClipRecorder {
                         increasedRecordingBufferSize);
 
         final short[] readBuffer = new short[readBufferSize];
-        final byte[] readBufferByte = new byte[readBufferSize];
 
         continueRecording = true;
         Log.d(TAG, "start recording, " + "recording bufferSize: "
@@ -166,9 +165,6 @@ public class AudioClipRecorder {
         while (continueRecording) {
             int bufferResult = recorder.read(readBuffer, 0, readBufferSize);
 
-            recorder.read(readBufferByte, 0, readBufferSize);
-
-
             //in case external code stopped this while read was happening
             if ((!continueRecording) || ((task != null) && task.isCancelled())) {
                 break;
@@ -182,6 +178,7 @@ public class AudioClipRecorder {
             // no errors, do processing
             {
 
+                /*
                 //TODO cambiar esto de lugar
                 // The connection URL
                 // String url = "https://ajax.googleapis.com/ajax/"+"services/search/web?v=1.0&q={query}";
@@ -200,6 +197,7 @@ public class AudioClipRecorder {
                 newSample.setSampleRate(sampleRate);
 
                 restTemplate.put(url, newSample, UUID.randomUUID().toString());
+                */
 
 
                 heard = clipListener.heard(readBuffer, sampleRate);
