@@ -178,26 +178,7 @@ public class AudioClipRecorder {
             // no errors, do processing
             {
 
-                /*
-                //TODO cambiar esto de lugar
-                // The connection URL
-                // String url = "https://ajax.googleapis.com/ajax/"+"services/search/web?v=1.0&q={query}";
-                String url = "http://169.254.26.198:5984/waes/{query}";
-                // Create a new RestTemplate instance
-                RestTemplate restTemplate = new RestTemplate();
 
-                // Add the String message converter
-                restTemplate.setMessageConverters(getMessageConverters());
-
-                Sample newSample = new Sample();
-
-                newSample.setAudioDataShort(readBuffer);
-                Log.d("Hola", readBufferByte.toString());
-                newSample.setAudioDataByte(readBufferByte);
-                newSample.setSampleRate(sampleRate);
-
-                restTemplate.put(url, newSample, UUID.randomUUID().toString());
-                */
 
 
                 heard = clipListener.heard(readBuffer, sampleRate);
@@ -264,10 +245,5 @@ public class AudioClipRecorder {
         recorder.setRecordPositionUpdateListener(positionUpdater);
     }
 
-    private List<HttpMessageConverter<?>> getMessageConverters() {
-        List<HttpMessageConverter<?>> converters = new ArrayList<HttpMessageConverter<?>>();
-        converters.add(new MappingJackson2HttpMessageConverter());
-        converters.add(new StringHttpMessageConverter());
-        return converters;
-    }
+
 }

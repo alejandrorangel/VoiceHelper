@@ -24,11 +24,20 @@
 
             <TextView
                 android:id="@+id/text"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/cicese_placeholder"
-                android:textSize="50dp" />
+                android:text=" "
+                android:textSize="50dp"
+                android:layout_gravity="top" />
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/text2"
+                android:text="normal"
+                android:textSize="60dp"
+                android:layout_gravity="bottom"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/incident_textview"
@@ -70,7 +79,7 @@
                 android:id="@+id/footer_trigger"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:text="@string/cicese_placeholder" />
+                android:text="CIESE" />
 
             <TextView
                 android:id="@+id/footer_rules"

@@ -1,10 +1,14 @@
 package mx.edu.cicese.alejandro.voicehelper.views;
 
 import android.content.Context;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
+
+import java.util.LinkedList;
 
 import mx.edu.cicese.alejandro.rules.Mistep;
 import mx.edu.cicese.alejandro.voicehelper.R;
@@ -13,6 +17,17 @@ import mx.edu.cicese.alejandro.voicehelper.R;
  * Created by UCI on 4/13/15.
  */
 public class PitchCardView extends FrameLayout implements MistepCardView {
+    private final int DELAYTIME = 2000;
+
+    private Runnable timeout = new Runnable() {
+        public void run() {
+            Log.d("VoiceHelper", "Timeout");
+            //releaseScreen();
+            clearFooterMessages();
+        }
+    };
+
+
 
     public PitchCardView(Context context){
         super(context);
@@ -26,6 +41,7 @@ public class PitchCardView extends FrameLayout implements MistepCardView {
         _rulesTextView = (TextView) view.findViewById(R.id.footer_rules);
         _triggerTextView = (TextView) view.findViewById(R.id.footer_trigger);
         _textView = (TextView) view.findViewById(R.id.text);
+        _secondTextView = (TextView) view.findViewById(R.id.text2);
         _mViewFlipper = (ViewFlipper) view.findViewById(R.id.footer);
         _mViewFlipper.setFlipInterval(R.integer.footer_flip_interval);
 
@@ -39,7 +55,14 @@ public class PitchCardView extends FrameLayout implements MistepCardView {
     }
 
     public void updateScale(Double value){
-        this._textView.setText(value + "");
+
+        String num = String.format("%.2f",value);
+        this._textView.setText("");
+    }
+
+    public void updateSecondView(String text){
+        this._secondTextView.setText(text);
+        myHandler.postDelayed(timeout, DELAYTIME);
     }
 
 
@@ -67,9 +90,15 @@ public class PitchCardView extends FrameLayout implements MistepCardView {
         this._mViewFlipper.startFlipping();
     }
 
+    public void clearFooterMessages() {
+        this._secondTextView.setText("normal");
+    }
+
+    private Handler myHandler = new Handler();
     private TextView _triggerTextView;
     private TextView _rulesTextView;
     private TextView _mistepCounter;
     private TextView _textView;
+    private TextView _secondTextView;
     private ViewFlipper _mViewFlipper;
 }

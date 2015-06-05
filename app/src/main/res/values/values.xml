@@ -2,4 +2,5 @@
 <resources>
     <integer name="update_frequency">250</integer>
     <integer name="footer_flip_interval">1500</integer>
+    <string name="Server">169.254.26.198:5984</string>
 </resources>

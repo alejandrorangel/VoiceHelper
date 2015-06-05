@@ -6,25 +6,17 @@
 
     <!-- Voice Trigger Messages -->
     <string-array name="voice_trigger_first">
-        <item>You are Speaking Too Loud</item>
+        <item>CICESE</item>
     </string-array>
     <string-array name="voice_trigger_second">
-        <item>Your Voice is Too High Again</item>
+        <item>CICESE</item>
     </string-array>
     <string-array name="voice_trigger_third">
-        <item>string 1</item>
-        <item>string 2</item>
-        <item>string 3</item>
-        <item>string 4</item>
-        <item>string 5</item>
+        <item>CICESE</item>
     </string-array>
     <!-- Fluency Trigger Messages -->
     <string-array name="fluency_trigger_first">
-        <item>string 1</item>
-        <item>string 2</item>
-        <item>string 3</item>
-        <item>string 4</item>
-        <item>string 5</item>
+        <item>CICESE</item>
     </string-array>
     <string-array name="fluency_trigger_second">
         <item>string 1</item>

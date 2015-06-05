@@ -17,6 +17,7 @@ import java.util.List;
 
 import de.greenrobot.event.EventBus;
 import mx.edu.cicese.alejandro.audio.Detector.ConsistentLoudNoiseDetector;
+import mx.edu.cicese.alejandro.audio.Detector.NetworkSender;
 import mx.edu.cicese.alejandro.audio.Detector.PitchDetector;
 import mx.edu.cicese.alejandro.audio.record.AudioClipListener;
 import mx.edu.cicese.alejandro.audio.record.OneDetectorManyObservers;
@@ -35,7 +36,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         init();
-        startTask(createAudioLogger(), "Voice Tracker");
+        startTask(createAudioLogger());
         setContentView(mCardScroller);
         EventBus.getDefault().register(this);
     }
@@ -53,7 +54,7 @@ public class MainActivity extends Activity {
         mCardScroller = new CardScrollView(this);
         CustomCardScrollAdapter mAdapter = new CustomCardScrollAdapter();
         mAdapter.addView(amplitudeCardView);
-        mAdapter.addView(fluencyCardView);
+        //mAdapter.addView(fluencyCardView);
         mAdapter.addView(pitchCardView);
         mCardScroller.setAdapter(mAdapter);
         // Handle the TAP event.
@@ -90,13 +91,16 @@ public class MainActivity extends Activity {
     protected void onDestroy() {
         _audioDetectorRunnable.interrupt();
         EventBus.getDefault().unregister(this);
+        System.exit(0);
         super.onDestroy();
     }
 
-    private void startTask(AudioClipListener detector, String name) {
+    private void startTask(AudioClipListener detector) {
         List<AudioClipListener> observers = new ArrayList<>();
-        observers.add(new ConsistentLoudNoiseDetector(2, 200, 200));
+        observers.add(new ConsistentLoudNoiseDetector(20, 200, 200));
         observers.add(new PitchDetector());
+        //observers.add(new ConsistentFrequencyDetector(5,250,200));
+        //observers.add(new NetworkSender());
         OneDetectorManyObservers wrapped =
                 new OneDetectorManyObservers(detector, observers);
         _audioDetectorRunnable = new Thread(new RecordAudioRunnable(this, wrapped));
@@ -126,7 +130,7 @@ public class MainActivity extends Activity {
 
     public void turnOnScreen() {
         if (powerManager.isScreenOn() == false) {
-            wakeLock.acquire(3000);
+            wakeLock.acquire(1000);
         }
 
     }
@@ -135,7 +139,7 @@ public class MainActivity extends Activity {
         if (mCardScroller.getSelectedItemPosition() == 0) {
             amplitudeCardView.updateScale((int) event.getCurrentVolume());
             if (event.isTooLoud() && !mistepDetected) {
-                mistepDetected = true;
+                //mistepDetected = true;
                 amplitudeCardView.mistepDetect(rulesEngine.addMistep(Mistep.Kind.VOICE));
                 turnOnScreen();
             }
@@ -144,8 +148,12 @@ public class MainActivity extends Activity {
 
     public void onEventMainThread(PitchDetector event) {
         Log.d(TAG, "PitchDetector " + event.getPitchValue());
-        if (mCardScroller.getSelectedItemPosition() == 2) {
+        if (mCardScroller.getSelectedItemPosition() == 1) {
             pitchCardView.updateScale(event.getPitchValue());
+            if(event.calculateRange()<=25){
+                turnOnScreen();
+                pitchCardView.updateSecondView("Flat");
+            }
         }
     }
 

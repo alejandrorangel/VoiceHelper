@@ -89,7 +89,7 @@
                 android:id="@+id/footer_trigger"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:text="@string/cicese_placeholder" />
+                android:text="sayWhat" />
 
             <TextView
                 android:id="@+id/footer_rules"

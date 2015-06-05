@@ -57,6 +57,8 @@ public class ConsistentFrequencyDetector implements AudioClipListener {
         frequencyHistory.removeLast();
         int range = calculateRange();
 
+        Log.d(TAG, frequency+"");
+
         if (DEBUG) {
             Log.d(TAG, "range: " + range + " threshold " + rangeThreshold
                     + " loud: " + AudioUtil.rootMeanSquared(audioData));
